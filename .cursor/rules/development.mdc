@@ -1,0 +1,29 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+
+# Your rule content
+
+- Use Kotlin as the main language
+- Prefer Jetpack Compose over XML for UI
+- Use MVI architecture
+- Do not use UseCases
+- All screen logic should go in a ViewModel
+- Use StateFlow for reactive UI state
+- Use Hilt for dependency injection
+- Use Repository pattern for data access
+- Follow Material Design 3 guidelines
+- Write reusable components/functions instead of copying logic
+- Write self-documenting code; use comments only when necessary
+- Write unit tests for all business logic
+- Use mocking for external dependencies in tests
+- Test edge cases, not just the happy path
+- Keep tests fast, isolated, and repeatable
+- Prefer given-when-then structure in test naming
+- Write code that is easy to change, not just easy to write
+- When writing code try to follow same patterns as already developed code
+- Add TODOs with context if something is temporary or unfinished
+
+
