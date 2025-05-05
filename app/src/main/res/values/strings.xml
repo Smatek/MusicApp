@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">MusicApp</string>
+    <string name="trending_empty">there is no trending track</string>
+    <string name="error_no_network">there is no network connection, please restore it</string>
+    <string name="error_server">connection to server failed</string>
+    <string name="cd_album_cover">album cover: %s</string>
 </resources>

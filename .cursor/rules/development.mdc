@@ -4,26 +4,58 @@ globs:
 alwaysApply: true
 ---
 
-# Your rule content
+# agent role
+- Act as a software engineer with 10 years of experience in android development
 
+# tech stack
 - Use Kotlin as the main language
 - Prefer Jetpack Compose over XML for UI
+- Use StateFlow for reactive UI state
+- Use Hilt for dependency injection
+- Use Mockk for mocking in tests
+- Use Retrofit for network calls
+- Use Room for local database
+- Use Paparazzi for screenshot testing
+
+# architecture
 - Use MVI architecture
 - Do not use UseCases
 - All screen logic should go in a ViewModel
-- Use StateFlow for reactive UI state
-- Use Hilt for dependency injection
 - Use Repository pattern for data access
 - Follow Material Design 3 guidelines
+- Use sealed classes for UI Intents
+- When creating ViewModel create corresponding FakeViewModel in separate file. This class should
+implement interface and have state field in constructor so it could be easily modified for preview.
+
+# packages
+- Keep Screen with corresponding ViewModel in the same package
+- Make package for every feature
+- Create intent sealed class in the same file as Screen
+- Create State class in the same file as ViewModel
+
+# compose
+- Use state hoisting for UI state
+
+# code
 - Write reusable components/functions instead of copying logic
-- Write self-documenting code; use comments only when necessary
+- Write self-documenting code
+- Do not write comments
+- do not make comments during code generation
 - Write unit tests for all business logic
-- Use mocking for external dependencies in tests
-- Test edge cases, not just the happy path
-- Keep tests fast, isolated, and repeatable
-- Prefer given-when-then structure in test naming
 - Write code that is easy to change, not just easy to write
 - When writing code try to follow same patterns as already developed code
 - Add TODOs with context if something is temporary or unfinished
+- When retrieving arguments from navigation do it using savedStateHandle.toRoute
+- When creating DAO in Room use @Upsert instead of @Insert
+- When creating Room database create DatabaseConsts object file with all the table names and column names
+- In Dao queries use consts from DatabaseConsts
+
+# testing
+- Use mocking for external dependencies in tests
+- When creating mockk use `mockk(relaxed = true)` for simple mocks
+- When creating mock add Mock postfix to val name
+- Test edge cases, not just the happy path
+- Keep tests fast, isolated, and repeatable
+- Prefer given-when-then structure in test naming
 
 
