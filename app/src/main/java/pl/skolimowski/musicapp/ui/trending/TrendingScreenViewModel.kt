@@ -5,6 +5,7 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.delay
@@ -22,10 +23,8 @@ import pl.skolimowski.musicapp.data.cache.CacheStatus
 import pl.skolimowski.musicapp.data.model.TrendingTrack
 import pl.skolimowski.musicapp.data.repository.Result
 import pl.skolimowski.musicapp.data.repository.TrackRepository
-import pl.skolimowski.musicapp.di.DispatcherProvider
 import pl.skolimowski.musicapp.network.watcher.NetworkState
 import pl.skolimowski.musicapp.network.watcher.NetworkStateWatcher
-import pl.skolimowski.musicapp.player.MusicController
 import javax.inject.Inject
 
 sealed class TrendingScreenStates {
@@ -66,8 +65,6 @@ interface ITrendingScreenViewModel {
 class TrendingScreenViewModel @Inject constructor(
     private val trackRepository: TrackRepository,
     private val networkStateWatcher: NetworkStateWatcher,
-    private val dispatchers: DispatcherProvider,
-    private val musicController: MusicController
 ) : ViewModel(), ITrendingScreenViewModel {
 
     private val _state = MutableStateFlow<TrendingScreenState>(TrendingScreenState())
@@ -85,7 +82,7 @@ class TrendingScreenViewModel @Inject constructor(
     }
 
     private fun observeTrendingTracks() {
-        viewModelScope.launch(dispatchers.io) {
+        viewModelScope.launch(Dispatchers.IO) {
             trackRepository.getTrendingTracks()
                 .collectLatest { tracks ->
                     _state.update { it.copy(trendingTracks = tracks.map { it }) }
@@ -94,7 +91,7 @@ class TrendingScreenViewModel @Inject constructor(
     }
 
     private fun observeNetworkStateAndLoad() {
-        viewModelScope.launch(dispatchers.default) {
+        viewModelScope.launch(Dispatchers.Default) {
             networkStateWatcher.networkState
                 .onEach { networkState ->
                     if (networkState == NetworkState.UNAVAILABLE && _state.value.screenState !is TrendingScreenStates.Success) {
@@ -119,7 +116,7 @@ class TrendingScreenViewModel @Inject constructor(
     }
 
     private fun observeCacheStatus() {
-        viewModelScope.launch(dispatchers.default) {
+        viewModelScope.launch(Dispatchers.Default) {
             trackRepository.getTrackCacheStatusFlow()
                 .collectLatest { statusMap ->
                     _state.update { it.copy(trackCacheStatus = statusMap) }
@@ -133,7 +130,7 @@ class TrendingScreenViewModel @Inject constructor(
         when (intent) {
             is TrendingScreenIntent.RefreshData -> fetchTrendingTracks()
             is TrendingScreenIntent.TrackClicked -> {
-                viewModelScope.launch(dispatchers.default) {
+                viewModelScope.launch(Dispatchers.Default) {
                     _sideEffect.send(TrendingScreenSideEffect.NavigateToDetails(intent.trendingTrack))
                 }
             }
@@ -147,7 +144,7 @@ class TrendingScreenViewModel @Inject constructor(
     private fun handleVisibleTracksChanged(visibleTrackIds: Set<String>) {
         prefetchJob?.cancel()
 
-        prefetchJob = viewModelScope.launch(dispatchers.io) {
+        prefetchJob = viewModelScope.launch(Dispatchers.IO) {
             trackRepository.prefetchTrackStart(visibleTrackIds)
         }
     }
@@ -155,7 +152,7 @@ class TrendingScreenViewModel @Inject constructor(
     private fun fetchTrendingTracks() {
         if (_state.value.screenState == TrendingScreenStates.Loading) return
 
-        viewModelScope.launch(dispatchers.io) {
+        viewModelScope.launch(Dispatchers.IO) {
             _state.update { it.copy(screenState = TrendingScreenStates.Loading) }
             delay(10L) // this delay is required so that pull to refresh can be hidden
 
