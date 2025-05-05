@@ -23,7 +23,7 @@ alwaysApply: true
 - All screen logic should go in a ViewModel
 - Use Repository pattern for data access
 - Follow Material Design 3 guidelines
-- Use sealed classes for UI Intents
+- Use sealed classes for UI Intents, put this class in the same file as corresponding screen
 - When creating ViewModel create corresponding FakeViewModel in separate file. This class should
 implement interface and have state field in constructor so it could be easily modified for preview.
 
@@ -41,6 +41,7 @@ implement interface and have state field in constructor so it could be easily mo
 - Write self-documenting code
 - Do not write comments
 - do not make comments during code generation
+- NO COMMENTS IN THE CODE
 - Write unit tests for all business logic
 - Write code that is easy to change, not just easy to write
 - When writing code try to follow same patterns as already developed code
