@@ -11,6 +11,11 @@ I created this project to learn how to use Cursor IDE.
 *   Stream music directly within the app - with prefetching to boost performance
 *   Clean, intuitive UI built with Jetpack Compose following Material 3 guidelines.
 
+<img src="screenshots/trending.png" width="300">
+<img src="screenshots/search.png" width="300">
+<img src="screenshots/playlist.png" width="300">
+<img src="screenshots/player.png" width="300">
+
 ## Tech Stack & Architecture
 *   **Language:** Kotlin
 *   **UI:** Jetpack Compose
