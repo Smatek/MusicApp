@@ -5,14 +5,14 @@ package pl.skolimowski.musicapp.ui.player
 import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.animation.SharedTransitionLayout
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.tooling.preview.Preview
-import pl.skolimowski.musicapp.data.model.entity.TrackInfoEntity
 import pl.skolimowski.musicapp.data.model.entity.Artwork
+import pl.skolimowski.musicapp.data.model.entity.TrackInfoEntity
+import pl.skolimowski.musicapp.ui.common.MaterialPreview
 import pl.skolimowski.musicapp.ui.theme.MusicAppTheme
 
-@Preview(name = "Collapsed Player Playing")
+@MaterialPreview
 @Composable
-private fun PlayerCollapsedPlayingPreview() {
+fun PlayerCollapsedPlayingPreview() {
     val fakeViewModel = FakePlayerViewModel(
         initialState = PlayerState(
             currentTrackInfo = TrackInfoEntity(
@@ -38,9 +38,9 @@ private fun PlayerCollapsedPlayingPreview() {
     }
 }
 
-@Preview(name = "Collapsed Player Paused")
+@MaterialPreview
 @Composable
-private fun PlayerCollapsedPausedPreview() {
+fun PlayerCollapsedPausedPreview() {
     val fakeViewModel = FakePlayerViewModel(
         initialState = PlayerState(
             currentTrackInfo = TrackInfoEntity(
@@ -61,9 +61,9 @@ private fun PlayerCollapsedPausedPreview() {
     }
 }
 
-@Preview(name = "Expanded Player Playing", showBackground = true, heightDp = 800)
+@MaterialPreview
 @Composable
-private fun PlayerExpandedPlayingPreview() {
+fun PlayerExpandedPlayingPreview() {
     val fakeViewModel = FakePlayerViewModel(
         initialState = PlayerState(
             currentTrackInfo = TrackInfoEntity(
@@ -89,9 +89,9 @@ private fun PlayerExpandedPlayingPreview() {
 }
 
 
-@Preview(name = "Expanded Player Paused", showBackground = true, heightDp = 800)
+@MaterialPreview
 @Composable
-private fun PlayerExpandedPausedPreview() {
+fun PlayerExpandedPausedPreview() {
     val fakeViewModel = FakePlayerViewModel(
         initialState = PlayerState(
             currentTrackInfo = TrackInfoEntity(
@@ -108,19 +108,6 @@ private fun PlayerExpandedPausedPreview() {
     MusicAppTheme {
         SharedTransitionLayout {
             Player(viewModel = fakeViewModel)
-        }
-    }
-}
-
-@Preview(name = "Collapsed - No Track")
-@Composable
-private fun PlayerNoTrackPreview() {
-    val fakeViewModel = FakePlayerViewModel(
-        initialState = PlayerState(currentTrackInfo = null)
-    )
-    MusicAppTheme {
-        SharedTransitionLayout {
-            Player(viewModel = fakeViewModel) // Should show nothing
         }
     }
 }

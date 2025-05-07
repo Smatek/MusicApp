@@ -5,6 +5,7 @@ plugins {
     alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.ksp)
     alias(libs.plugins.hilt.android.gradle)
+    alias(libs.plugins.paparazzi)
 }
 
 android {
@@ -106,6 +107,9 @@ dependencies {
     testImplementation(libs.turbine) // Flow testing helper
     testImplementation(libs.mockk) // Mocking library
     testImplementation(libs.truth)
+
+    // Paparazzi for screenshot testing
+    testImplementation(libs.paparazzi)
 
     // Android Testing (Instrumentation)
     androidTestImplementation(libs.androidx.junit)
