@@ -4,6 +4,7 @@ import app.cash.paparazzi.DeviceConfig
 import app.cash.paparazzi.Paparazzi
 import org.junit.Rule
 import org.junit.Test
+import pl.skolimowski.musicapp.ui.PaparazziExt.gif
 
 class TrendingScreenshotTest {
 
@@ -14,7 +15,7 @@ class TrendingScreenshotTest {
 
     @Test
     fun trendingScreenLoadingScreenshot() {
-        paparazzi.snapshot {
+        paparazzi.gif("trending_screen_loading", end = 5000L) {
             TrendingScreenLoadingPreview()
         }
     }

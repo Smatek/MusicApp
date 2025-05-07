@@ -32,7 +32,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.TextFieldValue
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.collectLatest
@@ -41,15 +40,9 @@ import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.mapNotNull
 import pl.skolimowski.musicapp.R
-import pl.skolimowski.musicapp.data.model.RecentlySearchedTrackImpl
 import pl.skolimowski.musicapp.data.model.Track
-import pl.skolimowski.musicapp.data.model.TrackImpl
-import pl.skolimowski.musicapp.data.model.entity.Artwork
-import pl.skolimowski.musicapp.data.model.entity.TrackInfoEntity
-import pl.skolimowski.musicapp.data.model.entity.TrackRecentlySearchedEntity
 import pl.skolimowski.musicapp.ui.common.FullScreenMessage
 import pl.skolimowski.musicapp.ui.common.TrackListItem
-import pl.skolimowski.musicapp.ui.theme.MusicAppTheme
 
 sealed class SearchScreenIntent {
     data class SearchQueryChanged(val query: String) : SearchScreenIntent()
@@ -223,127 +216,5 @@ fun SearchScreenContent(
                 )
             }
         }
-    }
-}
-
-// --- Previews --- //
-
-@Preview(showBackground = true, name = "Idle - Empty Recent")
-@Composable
-private fun PreviewSearchIdleEmpty() {
-    MusicAppTheme {
-        SearchScreenContent(
-            state = SearchScreenState(screenState = SearchScreenStateEnum.Idle),
-            onIntent = {})
-    }
-}
-
-@Preview(showBackground = true, name = "Idle - With Recent")
-@Composable
-private fun PreviewSearchIdleRecent() {
-    val recent = listOf(
-        RecentlySearchedTrackImpl(
-            trackInfo = TrackInfoEntity(
-                "r1",
-                "Recent Song 1",
-                "Artist A",
-                100000,
-                Artwork("url", "url")
-            ),
-            searchTimestamp = TrackRecentlySearchedEntity(
-                trackId = "r1",
-                searchTimestamp = 1234567890L
-            ),
-        ),
-        RecentlySearchedTrackImpl(
-            trackInfo = TrackInfoEntity(
-                "r2",
-                "Recent Song 2",
-                "Artist B",
-                1200000,
-                Artwork("url", "url")
-            ),
-            searchTimestamp = TrackRecentlySearchedEntity(
-                trackId = "r2",
-                searchTimestamp = 1234567890L
-            )
-        ),
-    )
-    MusicAppTheme {
-        SearchScreenContent(
-            state = SearchScreenState(
-                screenState = SearchScreenStateEnum.Idle,
-                recentSearches = recent
-            ), onIntent = {})
-    }
-}
-
-@Preview(showBackground = true, name = "Search Success")
-@Composable
-private fun PreviewSearchSuccess() {
-    val results = listOf(
-        TrackImpl(
-            trackInfo = TrackInfoEntity(
-                "s1",
-                "Search Result One",
-                "Artist X",
-                200000,
-                Artwork("url", "url")
-            )
-        ),
-        TrackImpl(trackInfo = TrackInfoEntity("s2", "Search Result Two", "Artist Y", 220000, null)),
-        TrackImpl(
-            trackInfo = TrackInfoEntity(
-                "s3",
-                "Search Result Three",
-                "Artist Z",
-                240000,
-                Artwork("url", "url")
-            )
-        )
-    )
-    MusicAppTheme {
-        SearchScreenContent(
-            state = SearchScreenState(
-                query = "test",
-                screenState = SearchScreenStateEnum.Search,
-                searchResults = results
-            ), onIntent = {})
-    }
-}
-
-@Preview(showBackground = true, name = "Empty Search Results")
-@Composable
-private fun PreviewSearchEmpty() {
-    MusicAppTheme {
-        SearchScreenContent(
-            state = SearchScreenState(
-                query = "abcdefgh",
-                screenState = SearchScreenStateEnum.Search
-            ), onIntent = {})
-    }
-}
-
-@Preview(showBackground = true, name = "Error - No Network")
-@Composable
-private fun PreviewSearchErrorNetwork() {
-    MusicAppTheme {
-        SearchScreenContent(
-            state = SearchScreenState(
-                query = "test",
-                screenState = SearchScreenStateEnum.Error(SearchErrorType.NO_NETWORK)
-            ), onIntent = {})
-    }
-}
-
-@Preview(showBackground = true, name = "Error - Server")
-@Composable
-private fun PreviewSearchErrorServer() {
-    MusicAppTheme {
-        SearchScreenContent(
-            state = SearchScreenState(
-                query = "test",
-                screenState = SearchScreenStateEnum.Error(SearchErrorType.SERVER_ERROR)
-            ), onIntent = {})
     }
 }

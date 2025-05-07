@@ -11,7 +11,6 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.PlayCircleFilled
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -24,6 +23,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import pl.skolimowski.musicapp.ui.common.LoadingIllustration
 import pl.skolimowski.musicapp.ui.common.TrackListItem
 
 sealed class PlaylistDetailsIntent {
@@ -40,8 +40,8 @@ fun PlaylistDetailsScreen(
         modifier = Modifier.fillMaxSize()
     ) {
         when {
-            state.isLoading -> { // Show loading indicator whenever isLoading is true
-                CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
+            state.isLoading -> {
+                LoadingIllustration(modifier = Modifier.fillMaxSize())
             }
 
             state.error != null -> {

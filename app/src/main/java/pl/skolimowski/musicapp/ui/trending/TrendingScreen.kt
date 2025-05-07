@@ -16,9 +16,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.core.net.toUri
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.debounce
@@ -26,14 +24,10 @@ import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.mapNotNull
 import pl.skolimowski.musicapp.R
-import pl.skolimowski.musicapp.data.cache.CacheStatus
 import pl.skolimowski.musicapp.data.model.TrendingTrack
-import pl.skolimowski.musicapp.data.model.TrendingTrackImpl
-import pl.skolimowski.musicapp.data.model.entity.TrackInfoEntity
-import pl.skolimowski.musicapp.data.model.entity.TrackStreamUrlEntity
 import pl.skolimowski.musicapp.ui.common.FullScreenMessage
+import pl.skolimowski.musicapp.ui.common.LoadingIllustration
 import pl.skolimowski.musicapp.ui.common.TrackListItem
-import pl.skolimowski.musicapp.ui.theme.MusicAppTheme
 import pl.skolimowski.musicapp.ui.trending.TrendingScreenIntent.RefreshData
 import pl.skolimowski.musicapp.ui.trending.TrendingScreenIntent.TrackClicked
 import pl.skolimowski.musicapp.ui.trending.TrendingScreenIntent.VisibleTracksChanged
@@ -93,7 +87,7 @@ fun TrendingScreenContent(
     ) {
         when (state.screenState) {
             is TrendingScreenStates.Loading -> {
-                // empty handled by pull refresh indicator
+                LoadingIllustration()
             }
 
             is TrendingScreenStates.Success -> {
@@ -138,80 +132,3 @@ fun TrendingScreenContent(
         }
     }
 }
-
-// --- Previews --- //
-
-@Preview(showBackground = true)
-@Composable
-private fun PreviewTrendingScreenSuccess() {
-    val mockTrackInfos = listOf(
-        TrendingTrackImpl(TrackInfoEntity("1", "Blinding Lights", "The Weeknd", 200000), TrackStreamUrlEntity("1", "url")),
-        TrendingTrackImpl(TrackInfoEntity("2", "Shape of You", "Ed Sheeran", 233000), TrackStreamUrlEntity("2", "url")),
-        TrendingTrackImpl(TrackInfoEntity(
-            "3",
-            "Someone You Loved - Extra Long Title That Needs to Ellipsize",
-            "Lewis Capaldi - Artist Also Very Long",
-            182000
-        ), TrackStreamUrlEntity("3", "url"))
-    )
-    MusicAppTheme {
-        TrendingScreenContent(
-            state = TrendingScreenState(
-                screenState = TrendingScreenStates.Success,
-                trendingTracks = mockTrackInfos
-            ),
-            onIntent = {}
-        )
-    }
-}
-
-@Preview(showBackground = true)
-@Composable
-private fun PreviewTrendingScreenLoading() {
-    MusicAppTheme {
-        TrendingScreenContent(
-            state = TrendingScreenState(TrendingScreenStates.Loading),
-            onIntent = {}
-        )
-    }
-}
-
-@Preview(showBackground = true, name = "No Network Error")
-@Composable
-private fun PreviewTrendingScreenErrorNoNetwork() {
-    MusicAppTheme {
-        TrendingScreenContent(
-            state = TrendingScreenState(TrendingScreenStates.Error(ErrorType.NO_NETWORK)),
-            onIntent = {}
-        )
-    }
-}
-
-@Preview(showBackground = true, name = "Server Error")
-@Composable
-private fun PreviewTrendingScreenErrorServer() {
-    MusicAppTheme {
-        TrendingScreenContent(
-            state = TrendingScreenState(TrendingScreenStates.Error(ErrorType.SERVER_ERROR)),
-            onIntent = {}
-        )
-    }
-}
-
-@Preview(showBackground = true)
-@Composable
-private fun PreviewTrackListItem() {
-    val trackInfo = TrackInfoEntity(
-        id = "1",
-        title = "A Great Song Title",
-        artist = "The Best Artist",
-        duration = 215000,
-        artwork = null
-    )
-    MusicAppTheme {
-        pl.skolimowski.musicapp.ui.common.TrackListItem(
-            trackInfo = trackInfo,
-            onClick = {},
-        )
-    }
-} 

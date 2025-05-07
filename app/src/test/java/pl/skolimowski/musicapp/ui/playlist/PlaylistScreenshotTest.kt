@@ -4,6 +4,7 @@ import app.cash.paparazzi.DeviceConfig
 import app.cash.paparazzi.Paparazzi
 import org.junit.Rule
 import org.junit.Test
+import pl.skolimowski.musicapp.ui.PaparazziExt.gif
 
 class PlaylistScreenshotTest {
 
@@ -14,7 +15,7 @@ class PlaylistScreenshotTest {
 
     @Test
     fun playlistScreenLoadingScreenshot() {
-        paparazzi.snapshot {
+        paparazzi.gif(name = "playlist_loading", end = 5000L) {
             PlaylistScreenLoadingPreview()
         }
     }
