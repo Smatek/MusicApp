@@ -1,7 +1,6 @@
 package pl.skolimowski.musicapp.ui.trending
 
 import android.net.Uri
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -125,8 +124,6 @@ class TrendingScreenViewModel @Inject constructor(
     }
 
     override fun sendIntent(intent: TrendingScreenIntent) {
-        Log.i("TrendingScreenViewModel", "sendIntent: $intent")
-
         when (intent) {
             is TrendingScreenIntent.RefreshData -> fetchTrendingTracks()
             is TrendingScreenIntent.TrackClicked -> {

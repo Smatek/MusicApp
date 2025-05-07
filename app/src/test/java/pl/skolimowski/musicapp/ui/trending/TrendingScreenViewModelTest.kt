@@ -166,17 +166,21 @@ class TrendingScreenViewModelTest {
 
     @Test
     fun `when fetch trending tracks fails then update state to server error`() = runTest {
+        // Set up the test environment
         coEvery { trackRepositoryMock.fetchTrendingTracks() } returns Result.Error(Exception("Test error"))
+        networkStateFlow.value = NetworkState.AVAILABLE
 
         createViewModel()
         testDispatcher.scheduler.advanceUntilIdle()
 
         viewModel.state.test {
+            // Initial state
             assertEquals(TrendingScreenStates.Loading, awaitItem().screenState)
-            assertEquals(
-                TrendingScreenStates.Error(ErrorType.SERVER_ERROR),
-                awaitItem().screenState
-            )
+            
+            // Error state
+            val errorState = awaitItem()
+            assertEquals(TrendingScreenStates.Error(ErrorType.SERVER_ERROR), errorState.screenState)
+            
             cancelAndIgnoreRemainingEvents()
         }
 
