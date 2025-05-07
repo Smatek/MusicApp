@@ -1,8 +1,13 @@
 package pl.skolimowski.musicapp.ui.common
 
+import android.annotation.SuppressLint
 import android.content.res.Configuration
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.material3.Scaffold
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.Wallpapers
+import pl.skolimowski.musicapp.ui.theme.MusicAppTheme
 
 @Preview(
     name = "dynamic colors - blue, dark mode",
@@ -47,3 +52,15 @@ import androidx.compose.ui.tooling.preview.Wallpapers
 @Preview(name = "1dark mode", apiLevel = 30, uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Preview(name = "2light mode", apiLevel = 30, uiMode = Configuration.UI_MODE_NIGHT_NO)
 annotation class MaterialPreview
+
+@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
+@Composable
+fun PreviewContainer(
+    content: @Composable () -> Unit
+) {
+    MusicAppTheme {
+        Scaffold {
+            content.invoke()
+        }
+    }
+}

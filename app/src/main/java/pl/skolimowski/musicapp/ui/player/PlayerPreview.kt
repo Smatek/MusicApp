@@ -8,7 +8,7 @@ import androidx.compose.runtime.Composable
 import pl.skolimowski.musicapp.data.model.entity.Artwork
 import pl.skolimowski.musicapp.data.model.entity.TrackInfoEntity
 import pl.skolimowski.musicapp.ui.common.MaterialPreview
-import pl.skolimowski.musicapp.ui.theme.MusicAppTheme
+import pl.skolimowski.musicapp.ui.common.PreviewContainer
 
 @MaterialPreview
 @Composable
@@ -30,8 +30,7 @@ fun PlayerCollapsedPlayingPreview() {
             isExpanded = false
         )
     )
-    MusicAppTheme {
-        // Wrap preview in SharedTransitionLayout for it to compile
+    PreviewContainer {
         SharedTransitionLayout {
             Player(viewModel = fakeViewModel)
         }
@@ -54,7 +53,7 @@ fun PlayerCollapsedPausedPreview() {
             isExpanded = false
         )
     )
-    MusicAppTheme {
+    PreviewContainer {
         SharedTransitionLayout {
             Player(viewModel = fakeViewModel)
         }
@@ -81,7 +80,7 @@ fun PlayerExpandedPlayingPreview() {
             isExpanded = true
         )
     )
-    MusicAppTheme {
+    PreviewContainer {
         SharedTransitionLayout {
             Player(viewModel = fakeViewModel)
         }
@@ -105,7 +104,7 @@ fun PlayerExpandedPausedPreview() {
             isExpanded = true
         )
     )
-    MusicAppTheme {
+    PreviewContainer {
         SharedTransitionLayout {
             Player(viewModel = fakeViewModel)
         }

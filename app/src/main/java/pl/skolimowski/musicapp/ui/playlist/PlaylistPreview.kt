@@ -1,14 +1,13 @@
 package pl.skolimowski.musicapp.ui.playlist
 
 import androidx.compose.runtime.Composable
-import pl.skolimowski.musicapp.data.model.Playlist
 import pl.skolimowski.musicapp.data.model.PlaylistImpl
 import pl.skolimowski.musicapp.data.model.TrackImpl
 import pl.skolimowski.musicapp.data.model.entity.Artwork
 import pl.skolimowski.musicapp.data.model.entity.PlaylistEntity
 import pl.skolimowski.musicapp.data.model.entity.TrackInfoEntity
 import pl.skolimowski.musicapp.ui.common.MaterialPreview
-import pl.skolimowski.musicapp.ui.theme.MusicAppTheme
+import pl.skolimowski.musicapp.ui.common.PreviewContainer
 
 @MaterialPreview
 @Composable
@@ -18,7 +17,7 @@ fun PlaylistScreenLoadingPreview() {
             isLoading = true
         )
     )
-    MusicAppTheme {
+    PreviewContainer {
         PlaylistScreen(
             viewModel = fakeViewModel,
             onPlaylistClick = {}
@@ -67,7 +66,7 @@ fun PlaylistScreenWithContentPreview() {
             )
         )
     )
-    MusicAppTheme {
+    PreviewContainer {
         PlaylistScreen(
             viewModel = fakeViewModel,
             onPlaylistClick = {}
@@ -83,7 +82,7 @@ fun PlaylistScreenErrorPreview() {
             error = "Failed to load playlists"
         )
     )
-    MusicAppTheme {
+    PreviewContainer {
         PlaylistScreen(
             viewModel = fakeViewModel,
             onPlaylistClick = {}
